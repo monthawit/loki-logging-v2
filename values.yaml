@@ -1,0 +1,60 @@
+loki:
+  auth_enabled: false      
+  storage:
+    bucketNames:
+      chunks: chunks
+      ruler: ruler
+      admin: admin
+    type: s3
+    s3:
+      endpoint: epsilon-s3.openlandscape.cloud:9000/test-loki 
+      region: 
+      secretAccessKey: yyyyyyyyyyyyy 
+      accessKeyId: xxxxxxxxx
+      s3ForcePathStyle: false
+      insecure: false
+
+minio:
+  enabled: true
+  #buckets:
+  #- name: chunks
+  #  policy: none
+  #  purge: false
+  #- name: ruler
+  #  policy: none
+  #  purge: false
+  #- name: admin
+  #  policy: none
+  #  purge: false
+  #drivesPerNode: 2
+  #enabled: false
+  persistence:
+    size: 150Gi
+  replicas: 1
+  #resources:
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+  rootPassword: your_password
+  rootUser: minioadmin
+
+backend:    
+  persistence:
+    storageClass: rook-cephfs
+
+write:
+  persistence:
+    storageClass: rook-cephfs   
+
+
+#gateway:
+#  ingress:
+#    enabled: true 
+#    ingressClassName: nginx
+#    hosts:
+#      - host: loki-gateway.milkyk8slab.dedyn.io
+#        paths:
+#        # New data structure introduced
+#          - path: /
+#        # Newly added optional property
+#            pathType: Prefix
