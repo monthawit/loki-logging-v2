@@ -15,6 +15,9 @@ loki:
       accessKeyId: xxxxxxxxx
       s3ForcePathStyle: false
       insecure: false
+      
+global:
+  dnsService: "coredns" #kube-dns,coredns
 
 minio:
   enabled: true
