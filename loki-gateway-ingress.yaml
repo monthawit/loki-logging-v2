@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway-loki
+  namespace: loki-stack
+  annotations:
+    #kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: certmanager-01
+    #nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    #nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # type of authentication
+    #nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    #nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    # message to display with an appropriate context why the authentication is required
+    #nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - gateway-loki.milkyk8slab.dedyn.io
+# if you use certmanager do not remove #
+    secretName: gateway-loki
+  rules:
+  - host: gateway-loki.milkyk8slab.dedyn.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: loki-gateway
+            port:
+              number: 80
+---
