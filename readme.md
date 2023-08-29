@@ -9,7 +9,8 @@ helm install --values loki-values.yaml loki grafana/loki -n loki-stack
 
 
 =======================================
-      Install Promtail On VM     
+
+Install Promtail On VM     
 
 https://levelup.gitconnected.com/how-to-setup-grafana-loki-for-free-log-management-ceb60558503c 
 
