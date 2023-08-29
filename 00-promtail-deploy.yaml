@@ -257,6 +257,8 @@ spec:
       - args:
         - -config.file=/etc/promtail/promtail.yaml
         env:
+        - name: TZ
+          value: "Asia/Bangkok"
         - name: HOSTNAME
           valueFrom:
             fieldRef:
