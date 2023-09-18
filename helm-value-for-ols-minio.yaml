@@ -1,0 +1,69 @@
+loki:
+  limits_config: 
+    retention_period: 2160h
+  auth_enabled: false
+  table_manager:
+    retention_deletes_enabled: true
+    retention_period: 2208h
+  storage:
+    bucketNames:
+      chunks: demo01
+      ruler: ruler
+      admin: admin
+    type: s3
+    s3:
+      endpoint: https://ct-storage.openlandscape.cloud:9000
+      region: us-west-1
+      bucketnames: demo01
+      secretAccessKey: minio-password-here
+      accessKeyId: minio-user-here
+      s3ForcePathStyle: true
+      insecure: false
+      
+      #global:
+      #dnsService: "coredns" #kube-dns,coredns
+
+#minio:
+ #enabled: true
+  #buckets:
+  #- name: chunks
+  #  policy: none
+  #  purge: false
+  #- name: ruler
+  #  policy: none
+  #  purge: false
+  #- name: admin
+  #  policy: none
+  #  purge: false
+  #drivesPerNode: 2
+  #enabled: false
+  #persistence:
+  #  size: 1000Gi
+  #replicas: 2
+  #resources:
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #rootPassword: kube@olsCl0ud
+  #rootUser: minioadmin
+
+backend:    
+  persistence:
+    storageClass: rook-cephfs
+
+write:
+  persistence:
+    storageClass: rook-cephfs   
+    
+
+#gateway:
+#  ingress:
+#    enabled: true 
+#    ingressClassName: nginx
+#    hosts:
+#      - host: loki-gateway.milkyk8slab.dedyn.io
+#        paths:
+#        # New data structure introduced
+#          - path: /
+#        # Newly added optional property
+#            pathType: Prefix
