@@ -44,8 +44,8 @@ loki:
   #  requests:
   #    cpu: 100m
   #    memory: 128Mi
-  #rootPassword: kube@olsCl0ud
-  #rootUser: minioadmin
+  #rootPassword: minio-password-here
+  #rootUser: minio-user-here
 
 backend:    
   persistence:
