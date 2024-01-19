@@ -29,6 +29,9 @@ spec:
       labels:
         app: grafana-rook-ceph
     spec:
+      securityContext:
+        runAsUser: 472
+        fsGroup: 472    
       containers:
       - image: grafana/grafana
         name: web-httpd
