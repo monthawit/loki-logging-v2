@@ -41,7 +41,7 @@ minio:
   #    cpu: 100m
   #    memory: 128Mi
   rootPassword: admin-ehp
-  rootUser: LXaIcaWkpZR8xBiP
+  rootUser: minio-admin
 
 backend:    
   persistence:
