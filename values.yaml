@@ -34,22 +34,22 @@ minio:
   #drivesPerNode: 2
   #enabled: false
   persistence:
-    size: 150Gi
+    size: 100Gi
   replicas: 1
   #resources:
   #  requests:
   #    cpu: 100m
   #    memory: 128Mi
-  rootPassword: your_password
-  rootUser: minioadmin
+  rootPassword: admin-ehp
+  rootUser: LXaIcaWkpZR8xBiP
 
 backend:    
   persistence:
-    storageClass: rook-cephfs
+    storageClass: nfs-client
 
 write:
   persistence:
-    storageClass: rook-cephfs   
+    storageClass: nfs-client
 
 
 #gateway:
