@@ -1,0 +1,191 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio-pvc
+  namespace: loki
+spec:
+  storageClassName: nfs-storageclass
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 300Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  namespace: loki
+  labels:
+    app: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      hostname: "minio4mimir-api"
+      containers:
+#      - image: minio/minio
+      - image: quay.io/minio/minio:RELEASE.2023-11-01T01-57-10Z-cpuv1 
+        name: minio
+        ports:
+        - containerPort: 9000
+          name: web-port
+          protocol: TCP
+        command:
+           - /bin/bash
+           - '-c'
+        env:
+          - name: MINIO_ROOT_USER
+            value: admin
+          - name: MINIO_ROOT_PASSWORD  
+            value: your-admin-password
+          - name: MINIO_SERVER_URL
+            value: "https://minio4mimir-api.undyingk8s.olsdemo.com:443"       
+          - name: CONSOLE_SECURE_TLS_REDIRECT
+            value: "off"
+          - name: MINIO_BROWSER_REDIRECT_URL
+            value: "https://minio4mimir-console.undyingk8s.olsdemo.com"    
+        args:
+          - 'minio server /data --console-address :9090'
+#        resources:
+#          requests:
+#            memory: "32Mi"
+#            cpu: "200m"
+#          limits:
+#            memory: "64Mi"
+#            cpu: "250m"
+        volumeMounts:
+        - mountPath: /data
+          name: minio-pvc
+#        volumeMounts:
+#        - name: host-path
+#          mountPath: /usr/share/nginx/html
+#      imagePullSecrets:
+#      - name: pull-secret-name
+      volumes:
+      - name: minio-pvc
+        persistentVolumeClaim:
+          claimName: minio-pvc
+#      volumes:
+#      - name: host-path
+#        hostPath:
+#          path: /home/user01/vol-01
+#      nodeSelector:
+#        kubernetes.io/hostname: ols-milky-k8s-worker-01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-console
+  namespace: loki
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9090
+    targetPort: 9090
+  selector:
+    app: minio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-api
+  namespace: minio
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9000
+    targetPort: 9000
+  selector:
+    app: minio
+---
+#apiVersion: cert-manager.io/v1
+#kind: Certificate
+#metadata:
+#  name: kibana-ingress  #name of this object
+#  namespace: efk #same namespace as 
+#spec:
+#  dnsNames:
+#    - kibana-ui.milky-k8s-02.dedyn.io 
+#  secretName: kibana-ingress
+#  issuerRef:
+#    name: cluster-issuer-01 
+#    kind: ClusterIssuer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console
+  namespace: loki
+  annotations:
+    #kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: certmanager01
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    #nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    #nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # type of authentication
+    #nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    #nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    # message to display with an appropriate context why the authentication is required
+    #nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - minio4mimir-console.undyingk8s.olsdemo.com
+# if you use certmanager do not remove #
+    secretName: minio-console-tls
+  rules:
+  - host: minio4mimir-console.undyingk8s.olsdemo.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio
+            port:
+              number: 9090
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-api
+  namespace: loki
+  annotations:
+    #kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: certmanager01
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    #nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    #nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # type of authentication
+    #nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    #nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    # message to display with an appropriate context why the authentication is required
+    #nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - foo'
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - minio4mimir-api.undyingk8s.olsdemo.com
+# if you use certmanager do not remove #
+    secretName: minio-api-tls
+  rules:
+  - host: minio4mimir-api.undyingk8s.olsdemo.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: minio-api
+            port:
+              number: 9000
