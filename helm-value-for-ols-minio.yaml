@@ -50,6 +50,8 @@ loki:
 backend:    
   persistence:
     storageClass: rook-cephfs
+  autoscaling:
+    maxReplicas: 1    
 
 write:
   persistence:
