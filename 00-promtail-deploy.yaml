@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki-stack
+    meta.helm.sh/release-namespace: loki
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -30,7 +30,7 @@ kind: ClusterRoleBinding
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki-stack
+    meta.helm.sh/release-namespace: loki
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -45,14 +45,14 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: loki-promtail
-  namespace: loki-stack
+  namespace: loki
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki-stack
+    meta.helm.sh/release-namespace: loki
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -67,14 +67,14 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: loki-promtail
-  namespace: loki-stack
+  namespace: loki
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki-stack
+    meta.helm.sh/release-namespace: loki
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -82,13 +82,13 @@ metadata:
     app.kubernetes.io/version: 2.8.3
     helm.sh/chart: promtail-6.13.1
   name: loki-promtail
-  namespace: loki-stack
+  namespace: loki
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: loki-promtail
-  namespace: loki-stack
+  namespace: loki
 data:
   promtail.yaml: |
     server:
@@ -213,7 +213,7 @@ metadata:
   annotations:
     deprecated.daemonset.template.generation: "1"
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki-stack
+    meta.helm.sh/release-namespace: loki
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -221,7 +221,7 @@ metadata:
     app.kubernetes.io/version: 2.8.3
     helm.sh/chart: promtail-6.13.1
   name: loki-promtail
-  namespace: loki-stack
+  namespace: loki
 spec:
   revisionHistoryLimit: 10
   selector:
