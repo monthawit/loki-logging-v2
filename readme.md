@@ -30,3 +30,9 @@ WantedBy=multi-user.target
 EOF
 $ sudo systemctl start promtail.service
 $ sudo systemctl enable promtail.service
+
+
+
+==================  limit ======
+
+https://community.grafana.com/t/discarding-promtail-log-entries-en-masse/41128/3 
