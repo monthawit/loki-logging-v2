@@ -21,7 +21,7 @@ loki:
       insecure: false
       
       #global:
-      #dnsService: "coredns" #kube-dns,coredns
+      #dnsService: "coredns" #kube-dns,coredns,rke2-coredns-rke2-coredns
 
 #minio:
  #enabled: true
