@@ -58,7 +58,12 @@ read:
   persistence:
     storageClass: nfs-client  
 
+limits_config:
+      ingestion_rate_strategy: global
+      ingestion_rate_mb: 400000000
+      ingestion_burst_size_mb: 400000000
 
+      
 #gateway:
 #  ingress:
 #    enabled: true 
