@@ -40,8 +40,8 @@ minio:
   #  requests:
   #    cpu: 100m
   #    memory: 128Mi
-  rootPassword: admin-ehp
-  rootUser: minio-admin
+  rootPassword: miniopassword
+  rootUser: minioadmin
 
 backend:
   replicas: 3
