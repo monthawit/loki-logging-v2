@@ -63,9 +63,16 @@ read:
     storageClass: nfs-client 
 
 limits_config:
-      ingestion_rate_strategy: global
-      ingestion_rate_mb: 400000000
-      ingestion_burst_size_mb: 400000000
+  ingestion_rate_strategy: global
+  ingestion_rate_mb: 400000000
+  ingestion_burst_size_mb: 400000000
+
+query_range:
+  split_queries_by_interval: 24h
+
+frontend:
+  max_outstanding_per_tenant: 1024
+
 
 #gateway:
 #  ingress:
