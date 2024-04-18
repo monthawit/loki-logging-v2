@@ -23,6 +23,12 @@ loki:
       #global:
       #dnsService: "coredns" #kube-dns,coredns,rke2-coredns-rke2-coredns
 
+#table_manager:
+#  retention_deletes_enabled: true
+#  retention_period: 168h
+#  target: all
+
+
 #minio:
  #enabled: true
   #buckets:
