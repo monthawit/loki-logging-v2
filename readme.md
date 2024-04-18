@@ -3,10 +3,15 @@ helm repo add grafana https://grafana.github.io/helm-charts
 
 helm repo update
 
+helm search repo grafana/loki --versions
 
-helm install --values loki-values.yaml loki grafana/loki -n loki
+helm install --values loki-values.yaml loki grafana/loki -n loki 
 
+ *** specific version *** 
 
+helm search repo grafana/loki --versions
+
+helm install --values loki-values.yaml loki grafana/loki -n loki --version CHART-VERSION-number
 
 =======================================
 
