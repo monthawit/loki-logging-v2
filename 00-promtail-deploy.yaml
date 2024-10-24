@@ -97,12 +97,15 @@ data:
       http_listen_port: 3101
 
 
-    clients:
+    #clients:
       #- url: http://203.150.151.231:3100/loki/api/v1/push
       #- url: http://loki:3100/loki/api/v1/push
       #- url: https://loki-gateway.milkyk8slab.dedyn.io/loki/api/v1/push  
-      - url: http://loki-gateway/loki/api/v1/push
-
+      #- url: http://loki-gateway/loki/api/v1/push
+    clients:
+      - url: https://loki-gateway.observe.olsdemo.com/loki/api/v1/push  
+        tenant_id: observe      
+        
     positions:
       filename: /run/promtail/positions.yaml
 
