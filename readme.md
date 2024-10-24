@@ -41,3 +41,10 @@ $ sudo systemctl enable promtail.service
 ==================  limit ======
 
 https://community.grafana.com/t/discarding-promtail-log-entries-en-masse/41128/3 
+
+
+============ Grafana Dashboard ID ==============
+
+16966 
+
+https://grafana.com/grafana/dashboards/16966-container-log-dashboard/ 
