@@ -105,6 +105,16 @@ data:
     clients:
       - url: https://loki-gateway.observe.olsdemo.com/loki/api/v1/push  
         tenant_id: observe      
+        ##kubectl create secret generic loki-auth --from-literal=username=<your-username> --from-literal=password=<your-password> -n loki
+        basic_auth:
+          username: "<your-username>"
+          password: "<your-password>"
+        # ถ้าคุณใช้ Bearer Token สำหรับการ Authentication
+        # bearer_token: "<your-bearer-token>"
+    
+    # ใช้ TLS ถ้าจำเป็น
+    tls_config:
+      insecure_skip_verify: true # เปลี่ยนเป็น false ถ้าไม่ต้องการข้ามการตรวจสอบ TLS        
         
     positions:
       filename: /run/promtail/positions.yaml
