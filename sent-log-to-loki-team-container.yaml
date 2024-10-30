@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki
+    meta.helm.sh/release-namespace: loki-stack
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -31,7 +31,7 @@ kind: ClusterRoleBinding
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki
+    meta.helm.sh/release-namespace: loki-stack
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -53,7 +53,7 @@ kind: ClusterRoleBinding
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki
+    meta.helm.sh/release-namespace: loki-stack
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -75,7 +75,7 @@ kind: ServiceAccount
 metadata:
   annotations:
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki
+    meta.helm.sh/release-namespace: loki-stack
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -98,27 +98,17 @@ data:
       http_listen_port: 3101
 
 
-    #clients:
-      #- url: http://203.150.151.231:3100/loki/api/v1/push
-      #- url: http://loki:3100/loki/api/v1/push
-      #- url: https://loki-gateway.milkyk8slab.dedyn.io/loki/api/v1/push  
-      #- url: http://loki-gateway/loki/api/v1/push
     clients:
       - url: https://loki-gateway.observe.olsdemo.com/loki/api/v1/push  
-        tenant_id: observe      
-        ##kubectl create secret generic loki-auth --from-literal=username=<your-username> --from-literal=password=<your-password> -n loki
+        tenant_id: observe
         basic_auth:
           username: "lokiadmin"
           password: "loki@olsCl0udNaKub"
-        # ถ้าคุณใช้ Bearer Token สำหรับการ Authentication
-        # bearer_token: "<your-bearer-token>"
-    
-    # ใช้ TLS ถ้าจำเป็น
-    tls_config:
-      insecure_skip_verify: true # เปลี่ยนเป็น false ถ้าไม่ต้องการข้ามการตรวจสอบ TLS        
-        
+
+
     positions:
       filename: /run/promtail/positions.yaml
+
 
     scrape_configs:
       - job_name: kubernetes-events
@@ -128,8 +118,8 @@ data:
             labels:
               job: kubernetes-events
               __path__: /var/log/k8s-events/*.log
-    
-      # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
+
+      #See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
       - job_name: kubernetes-pods
         pipeline_stages:
           - cri: {}
@@ -235,7 +225,7 @@ metadata:
   annotations:
     deprecated.daemonset.template.generation: "1"
     meta.helm.sh/release-name: loki
-    meta.helm.sh/release-namespace: loki
+    meta.helm.sh/release-namespace: loki-stack
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
@@ -260,6 +250,7 @@ spec:
       containers:
       - args:
         - -config.file=/etc/promtail/promtail.yaml
+        - -config.expand-env=true
         env:
         - name: TZ
           value: "Asia/Bangkok"
