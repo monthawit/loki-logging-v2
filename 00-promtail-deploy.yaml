@@ -15,6 +15,7 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - events  
   - nodes
   - nodes/proxy
   - services
@@ -120,6 +121,14 @@ data:
       filename: /run/promtail/positions.yaml
 
     scrape_configs:
+      - job_name: kubernetes-events
+        static_configs:
+          - targets:
+              - localhost
+            labels:
+              job: kubernetes-events
+              __path__: /var/log/k8s-events/*.log
+    
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
       - job_name: kubernetes-pods
         pipeline_stages:
@@ -335,3 +344,37 @@ spec:
       maxSurge: 0
       maxUnavailable: 1
     type: RollingUpdate
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kubernetes-events-logger
+  #namespace: monitoring
+  namespace: loki
+spec:
+  schedule: "*/5 * * * *"  # รันทุก ๆ 5 นาที
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 600
+      template:
+        spec:
+          serviceAccount: loki-promtail
+          serviceAccountName: loki-promtail
+          containers:
+            - name: kubernetes-events-logger
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  kubectl get events --all-namespaces -o json | jq -c '.items[]' | while read event; do
+                    echo $event
+                  done
+              # ส่งออก logs ไปที่ไฟล์ให้ Promtail อ่านได้
+              volumeMounts:
+                - name: log-volume
+                  mountPath: /var/log/k8s-events
+          restartPolicy: OnFailure
+          volumes:
+            - name: log-volume
+              emptyDir: {}
