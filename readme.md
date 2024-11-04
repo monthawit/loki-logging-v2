@@ -48,3 +48,13 @@ https://community.grafana.com/t/discarding-promtail-log-entries-en-masse/41128/3
 16966 
 
 https://grafana.com/grafana/dashboards/16966-container-log-dashboard/ 
+
+==================== Connection ====================
+
+=== Send To log server ====
+
+https://loki-gateway.observe.olsdemo.com/loki/api/v1/push
+
+=== Connect By Grafana ===
+
+http://loki-gateway.loki.svc.cluster.local
