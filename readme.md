@@ -43,7 +43,7 @@ $ sudo systemctl enable promtail.service
 https://community.grafana.com/t/discarding-promtail-log-entries-en-masse/41128/3 
 
 
-============ Grafana Dashboard ID ==============
+============ Promtail Grafana Dashboard ID ==============
 
 16966 
 
