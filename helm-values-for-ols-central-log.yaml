@@ -1,4 +1,15 @@
 loki:
+  schemaConfig:
+    configs:
+      - from: "2024-01-11"
+        index:
+          period: 24h
+          prefix: loki_index_
+        object_store: s3
+        schema: v13
+        store: tsdb
+#        store: boltdb-shipper  
+  #useTestSchema: true
   limits_config: 
     retention_period: 2160h
   auth_enabled: true
@@ -15,8 +26,8 @@ loki:
       endpoint: minio-loki-api.observe.olsdemo.com
       region: ols-observe-loki
       bucketnames: loki
-      secretAccessKey: xxxxxx
-      accessKeyId:  xxxxx
+      secretAccessKey: xxxxx
+      accessKeyId: xxxxxx
       s3ForcePathStyle: true
       insecure: false
       
@@ -28,6 +39,21 @@ loki:
   #    volume_enabled: true
 #    ingestion_rate_mb: 10
 #    ingestion_burst_size_mb: 20
+#  config:
+#    schemaConfig:
+#      configs:
+#        - from: "2024-11-11"                 # วันที่เริ่มใช้ schema นี้
+#          store: boltdb-shipper               # กำหนดประเภท store เช่น `boltdb-shipper` หรือ `bigtable` ฯลฯ
+#          object_store: s3                    # กำหนดประเภทของ object store ที่ใช้ เช่น `filesystem`, `s3`, `gcs`, `azure`, `swift`, ฯลฯ
+#          schema: v11                         # ระบุ schema เวอร์ชันที่ต้องการ เช่น `v11` เป็นเวอร์ชันล่าสุดที่นิยม
+#          index:
+#            prefix: loki_index_               # ชื่อ prefix สำหรับดัชนี
+#            period: 24h                       # ระยะเวลาในการสร้างดัชนีใหม่
+
+      
+
+
+
 
 limits_config:
   ingestion_rate_strategy: global
