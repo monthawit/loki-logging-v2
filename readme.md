@@ -1,3 +1,9 @@
+Openshift send log to external log 
+
+https://www.redhat.com/en/blog/openshift-logging-forwarding-logs-to-external-loki
+
+=========================================
+
 helm repo add grafana https://grafana.github.io/helm-charts
 
 
