@@ -65,10 +65,10 @@ data:
     clients:
       - url: http://loki-logging-gateway.loki-logging.svc.cluster.local/loki/api/v1/push
       #- url: https://observe2-loki-gateway.observe.olsdemo.com/loki/api/v1/push
-        tenant_id: containerplatform
+        tenant_id: xxxxxxxxxxxx
         basic_auth:
-          username: "lokiadmin"
-          password: "loki@1NetCl0ud"
+          username: "admin"
+          password: "xxxxxxxxxx"
     positions:
       filename: /tmp/positions.yaml
     target_config:
