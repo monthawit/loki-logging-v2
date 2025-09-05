@@ -344,6 +344,8 @@ metadata:
   namespace: loki
 spec:
   schedule: "*/5 * * * *"  # รันทุก ๆ 5 นาที
+  successfulJobsHistoryLimit: 5 # Retain only 3 successful Jobs
+  failedJobsHistoryLimit: 1 # Retain only 1 failed Job   
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 600
