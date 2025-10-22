@@ -68,3 +68,7 @@ https://loki-gateway.observe.olsdemo.com/loki/api/v1/push
 === Connect By Grafana ===
 
 http://loki-gateway.loki.svc.cluster.local
+
+X-Scope-OrgID
+
+
