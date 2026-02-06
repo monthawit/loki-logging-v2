@@ -1,3 +1,36 @@
+##  ==== 2026 02 06 =====
+
+### helm command version 20260206
+
+```bash
+helm repo add grafana https://grafana.github.io/helm-charts
+
+
+helm upgrade --install loki grafana/loki -n loki -f values.yaml --set loki.useTestSchema=true
+
+
+
+helm search repo grafana/loki --versions
+
+helm upgrade --install loki grafana/loki -n loki -f values.yaml --version 5.47.2 
+
+============= Use This !!!! ====================================
+
+helm upgrade --install loki grafana/loki -n loki -f values.yaml --version 6.16.0
+
+============= Use This on 2025/04/10 !!!! ====================================
+
+helm upgrade --install observe2-loki grafana/loki -n observe2-loki -f values.yaml --version 6.29.0
+
+
+============= Use This on 2026/02/06 !!!! ====================================
+
+helm upgrade --install observe2-loki grafana/loki -n loki -f values.yaml --version 6.29.0
+```
+
+
+
+
 Openshift send log to external log 
 
 https://www.redhat.com/en/blog/openshift-logging-forwarding-logs-to-external-loki
