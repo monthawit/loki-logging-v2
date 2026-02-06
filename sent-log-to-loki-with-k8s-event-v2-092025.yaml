@@ -102,8 +102,8 @@ data:
       - url: https://observe2-loki-gateway.observe.olsdemo.com/loki/api/v1/push  
         tenant_id: milkyk8s
         basic_auth:
-          username: "lokiadmin"
-          password: "loki@olsCl0udNaKub"
+          username: "xxxx"
+          password: "xxxxx"
 
 
     positions:
