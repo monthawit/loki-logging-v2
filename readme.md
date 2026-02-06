@@ -48,7 +48,7 @@ helm upgrade --install observe2-loki grafana/loki -n observe2-loki -f values.yam
 
 ============= Use This on 2026/02/06 !!!! ====================================
 
-helm upgrade --install observe2-loki grafana/loki -n loki -f values.yaml --version 6.29.0
+helm upgrade --install observe2-loki grafana/loki -n loki -f values.yaml --version 6.52.0
 ```
 
 
